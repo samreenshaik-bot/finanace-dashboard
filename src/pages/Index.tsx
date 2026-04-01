@@ -1,16 +1,49 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { DashboardProvider, useDashboard } from "@/context/DashboardContext";
+import { SummaryCards } from "@/components/dashboard/SummaryCards";
+import { BalanceTrendChart } from "@/components/dashboard/BalanceTrendChart";
+import { SpendingBreakdownChart } from "@/components/dashboard/SpendingBreakdownChart";
+import { TransactionsTable } from "@/components/dashboard/TransactionsTable";
+import { InsightsSection } from "@/components/dashboard/InsightsSection";
+import { AddTransactionDialog } from "@/components/dashboard/AddTransactionDialog";
+import { RoleSwitcher } from "@/components/dashboard/RoleSwitcher";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+function DashboardContent() {
+  const { role } = useDashboard();
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border/50 bg-card">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-foreground">FinTrack</h1>
+            <p className="text-sm text-muted-foreground">Financial Dashboard</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <RoleSwitcher />
+            {role === "admin" && <AddTransactionDialog />}
+          </div>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-6 space-y-6">
+        <SummaryCards />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <BalanceTrendChart />
+          <SpendingBreakdownChart />
+        </div>
+
+        <InsightsSection />
+        <TransactionsTable />
+      </main>
     </div>
   );
-};
+}
 
-const Index = PlaceholderIndex;
-
-export default Index;
+export default function Index() {
+  return (
+    <DashboardProvider>
+      <DashboardContent />
+    </DashboardProvider>
+  );
+}
