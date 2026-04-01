@@ -1,4 +1,4 @@
-#📊 Finance Dashboard UI
+##📊 Finance Dashboard UI
 📌 Overview
 
 This project is a Finance Dashboard UI built using HTML, Tailwind CSS, and JavaScript.
